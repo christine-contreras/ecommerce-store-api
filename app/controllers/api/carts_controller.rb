@@ -11,6 +11,8 @@ class Api::CartsController < ApplicationController
                 @cart.user = @current_user
             end
             @cart.save
+
+            session[:cart_id] = @cart.id
         end
 
         render json: @cart
@@ -19,7 +21,7 @@ class Api::CartsController < ApplicationController
     private
 
     def set_cart
-        @cart = Cart.find_by_id(session[:cart_id])
+        @cart = Cart.find_by(session[:cart_id])
     end
 
     def render_not_found_response

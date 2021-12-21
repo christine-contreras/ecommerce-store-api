@@ -45,5 +45,8 @@ module EcommApi
 
     # Use SameSite=Strict for all cookies to help protect against CSRF
     config.action_dispatch.cookies_same_site_protection = :strict
+
+    # Don't check for the existence of belongs_to records
+    # config.active_record.belongs_to_required_by_default = false
   end
 end

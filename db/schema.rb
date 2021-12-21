@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_215736) do
   enable_extension "plpgsql"
 
   create_table "carts", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_carts_on_user_id"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_215736) do
     t.text "address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "isAdmin", null: false
+    t.boolean "isAdmin", default: false
   end
 
   add_foreign_key "carts", "users"

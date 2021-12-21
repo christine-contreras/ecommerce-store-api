@@ -23,6 +23,6 @@ class Api::CartsController < ApplicationController
     end
 
     def render_not_found_response
-        render json: { error: 'No Cart Found' }, status: :not_found
+        render json: { errors: ['No Cart Found'] }, status: :not_found
     end
 end

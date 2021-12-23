@@ -5,12 +5,9 @@ class Api::CartsController < ApplicationController
     
 
     def show 
-        byebug
         if session.include? :cart_id
-            byebug
             set_cart
         else
-            byebug
             create_cart
         end
 
@@ -25,11 +22,10 @@ class Api::CartsController < ApplicationController
 
     def create_cart
         @cart = Cart.new
-        if @current_user 
-            @cart.user = @current_user
-        end
+        # if @current_user 
+        #     @cart.user = @current_user
+        # end
         @cart.save
-        byebug
         session[:cart_id] = @cart.id
         @cart
     end

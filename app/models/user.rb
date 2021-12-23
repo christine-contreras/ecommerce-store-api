@@ -3,5 +3,4 @@ class User < ApplicationRecord
     validates :email, {presence: true, uniqueness: true}
     serialize :address, JSON
     
-    has_one :cart
 end

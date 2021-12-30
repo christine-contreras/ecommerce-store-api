@@ -21,11 +21,7 @@ class Api::CartsController < ApplicationController
     end
 
     def create_cart
-        @cart = Cart.new
-        # if @current_user 
-        #     @cart.user = @current_user
-        # end
-        @cart.save
+        @cart = Cart.create
         session[:cart_id] = @cart.id
         @cart
     end

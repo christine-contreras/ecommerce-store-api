@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
     get "/user-cart", to: "carts#show"
 
+    resources :categories, only: [:index, :create, :update, :destroy]
+
 
     
   end

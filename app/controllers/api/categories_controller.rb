@@ -10,6 +10,7 @@ class Api::CategoriesController < ApplicationController
 
     def create 
         category = Category.create(category_params)
+        byebug
         render json: category, include: ['products', 'products.skus'], status: :created
     end
 

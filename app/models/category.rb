@@ -3,5 +3,5 @@ class Category < ApplicationRecord
     has_many :products, through: :product_categories
 
     validates :name, {presence: true}
-    validates :isActive, {presence: true}
+    validates :isActive, {inclusion: { in: [ true, false ] }}
 end

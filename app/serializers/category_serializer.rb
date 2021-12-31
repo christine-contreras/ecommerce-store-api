@@ -1,8 +1,9 @@
 class CategorySerializer < ActiveModel::Serializer
-  attributes :id, :name, :products_slotted, :status
+  attributes :id, :name, :description, :products_slotted, :isActive
+  # attributes :id, :name, :description, :isActive
   has_many :products
 
   def products_slotted
-    self.products.count
+    self.object.products.count
   end
 end

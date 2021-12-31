@@ -31,10 +31,10 @@ class Api::CategoriesController < ApplicationController
     end
 
     def category_params
-        params.permit(:name)
+        params.permit(:name, :description, :isActive)
     end
 
     def render_not_found_response
-        render json: { error: 'Category Not Found' }, status: :not_found
+        render json: { errors: ['Category Not Found'] }, status: :not_found
     end
 end

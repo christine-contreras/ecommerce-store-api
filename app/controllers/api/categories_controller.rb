@@ -1,6 +1,6 @@
 class Api::CategoriesController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
-    skip_before_action :authorize, only: [:index, :show]
+    skip_before_action :authorize, only: [:index]
     before_action :set_category, only: [:update, :destroy]
 
     def index
@@ -10,7 +10,6 @@ class Api::CategoriesController < ApplicationController
 
     def create 
         category = Category.create(category_params)
-        byebug
         render json: category, include: ['products', 'products.skus'], status: :created
     end
 

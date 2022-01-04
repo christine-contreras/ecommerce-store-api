@@ -1,7 +1,5 @@
 class SkuSerializer < ActiveModel::Serializer
-  attributes :id, :size, :color, :price
+  attributes :id, :size, :color, :price, :quantity, :image
 
   belongs_to :product
-  belongs_to :order 
-  belongs_to :cart
 end

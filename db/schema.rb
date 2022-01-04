@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_31_203007) do
+ActiveRecord::Schema.define(version: 2022_01_03_221844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,17 +82,26 @@ ActiveRecord::Schema.define(version: 2021_12_31_203007) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "selected_items", force: :cascade do |t|
+    t.integer "quantity"
+    t.bigint "cart_id"
+    t.bigint "order_id"
+    t.bigint "sku_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cart_id"], name: "index_selected_items_on_cart_id"
+    t.index ["order_id"], name: "index_selected_items_on_order_id"
+    t.index ["sku_id"], name: "index_selected_items_on_sku_id"
+  end
+
   create_table "skus", force: :cascade do |t|
-    t.bigint "order_id", null: false
-    t.bigint "cart_id", null: false
     t.bigint "product_id", null: false
     t.string "size"
     t.string "color"
-    t.decimal "price", precision: 6, scale: 2
+    t.decimal "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["cart_id"], name: "index_skus_on_cart_id"
-    t.index ["order_id"], name: "index_skus_on_order_id"
+    t.integer "quantity"
     t.index ["product_id"], name: "index_skus_on_product_id"
   end
 
@@ -111,7 +120,8 @@ ActiveRecord::Schema.define(version: 2021_12_31_203007) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "product_categories", "categories"
   add_foreign_key "product_categories", "products"
-  add_foreign_key "skus", "carts"
-  add_foreign_key "skus", "orders"
+  add_foreign_key "selected_items", "carts"
+  add_foreign_key "selected_items", "orders"
+  add_foreign_key "selected_items", "skus"
   add_foreign_key "skus", "products"
 end

@@ -1,10 +1,15 @@
 class ProductSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :quantity
+  attributes :id, :title, :description, :quantity, :isActive
 
   has_many :skus 
   has_many :categories
 
   def quantity
-    self.skus.count
+    self.object.skus.count
+  end
+
+  def isActive 
+    count = self.quantity
+    count == 0 ? 'inactive' : 'active'
   end
 end

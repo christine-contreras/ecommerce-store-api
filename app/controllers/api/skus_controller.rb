@@ -8,7 +8,6 @@ class Api::SkusController < ApplicationController
 
     def create 
         sku = Sku.create(sku_params)
-        byebug
         render json: sku, status: :created
     end
 

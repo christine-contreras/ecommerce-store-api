@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     resources :products, only: [:index, :create, :update, :destroy]
     resources :skus, only: [:index, :create, :update, :destroy]
 
-
+    post "/update-product-categories", to: "product_categories#update_product_categories"
     
   end
 

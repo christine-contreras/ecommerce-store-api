@@ -18,7 +18,7 @@ class SkuSerializer < ActiveModel::Serializer
   # # grab url of image
   def image_url 
     if self.object.image.attached?
-      self.object.image.service_url
+      self.object.image.url
     end
   end
 

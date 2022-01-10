@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
     include ActionController::Cookies
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
-    
+    # before_action :set_active_storage_host
   
   
     before_action :authorize 
@@ -17,5 +17,10 @@ class ApplicationController < ActionController::API
     def render_unprocessable_entity(exception)
       render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity
     end
+
+    def set_active_storage_host
+      ActiveStorage::Current.host = 'http://localhost:3000' if ActiveStorage::Current.host.blank?
+      true
+  end
   
 end

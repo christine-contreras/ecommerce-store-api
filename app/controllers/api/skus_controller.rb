@@ -1,7 +1,7 @@
 class Api::SkusController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     before_action :set_sku, only: [:update, :destroy]
-    before_action :set_active_storage_host
+    
     def index 
         skus = Sku.all 
         render json: skus, status: :ok
@@ -16,7 +16,7 @@ class Api::SkusController < ApplicationController
 
     def update 
         @sku.update(sku_params)
-        @sku.image.purge if @sku.image.attached?
+        # @sku.image.purge if @sku.image.attached?
         @sku.image.attach(params[:image])
         # url =  polymorphic_url(@sku.image)
         # byebug
@@ -43,9 +43,6 @@ class Api::SkusController < ApplicationController
         render json: { errors: ['Sku Not Found'] }, status: :not_found
     end
 
-    def set_active_storage_host
-        ActiveStorage::Current.host = 'http://localhost:3000' if ActiveStorage::Current.host.blank?
-        true
-    end
+
 
 end

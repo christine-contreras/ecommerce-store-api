@@ -5,5 +5,11 @@ class Sku < ApplicationRecord
   validates :color, {presence: true }
   validates :price, {presence: true, numericality: true}
 
+  # grab url of image
+  def image_url 
+    if self.image.attached?
+      self.image.url(expires_in: 8.hours)
+    end
+  end
 
 end

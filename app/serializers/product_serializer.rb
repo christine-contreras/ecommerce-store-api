@@ -1,5 +1,5 @@
 class ProductSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :quantity, :isActive, :isSlotted, :prices, :colors, :sizes
+  attributes :id, :title, :description, :quantity, :isActive, :isSlotted, :prices, :colors, :sizes, :images
 
   has_many :skus 
   has_many :categories
@@ -24,6 +24,17 @@ class ProductSerializer < ActiveModel::Serializer
   def sizes
     if self.quantity > 0
       self.object.skus.collect {|sku| sku.size}.uniq
+    else
+      return []
+    end
+  end
+
+  def images
+    if self.colors.length > 0
+      self.colors.collect do |color|
+          sku = self.object.skus.find {|sku| sku.color === color}
+          return {color: color, image: sku.image_url}
+      end
     else
       return []
     end

@@ -18,9 +18,9 @@ class ApplicationController < ActionController::API
       render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity
     end
 
-    def set_active_storage_host
-      ActiveStorage::Current.host = 'http://localhost:3000' if ActiveStorage::Current.host.blank?
-      true
-  end
+  #   def set_active_storage_host
+  #     ActiveStorage::Current.host = 'http://localhost:3000' if ActiveStorage::Current.host.blank?
+  #     true
+  # end
   
 end

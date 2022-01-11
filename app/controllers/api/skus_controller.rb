@@ -16,10 +16,10 @@ class Api::SkusController < ApplicationController
 
     def update 
         @sku.update(sku_params)
-        # @sku.image.purge if @sku.image.attached?
-        @sku.image.attach(params[:image])
-        # url =  polymorphic_url(@sku.image)
-        # byebug
+        if params[:image] 
+            @sku.image.attach(params[:image])
+        end
+        
         render json: @sku, status: :accepted
     end
 

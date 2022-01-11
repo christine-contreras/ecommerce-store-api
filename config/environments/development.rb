@@ -14,6 +14,7 @@ Rails.application.configure do
   # Store files locally.
   # config.active_storage.service = :local
   config.active_storage.service = :amazon
+  config.active_storage.urls_expire_in = 24.hours
 
   # Show full error reports.
   config.consider_all_requests_local = true

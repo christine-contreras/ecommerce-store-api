@@ -20,6 +20,7 @@ Rails.application.configure do
   # config.require_master_key = true
   # config.active_storage.service = :local
   config.active_storage.service = :amazon
+  config.active_storage.urls_expire_in = 24.hours
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.

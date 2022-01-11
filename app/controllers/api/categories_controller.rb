@@ -10,11 +10,17 @@ class Api::CategoriesController < ApplicationController
 
     def create 
         category = Category.create(category_params)
+        if params[:image] 
+            category.image.attach(params[:image])
+        end 
         render json: category, include: ['products', 'products.skus'], status: :created
     end
 
     def update 
         @category.update(category_params)
+        if params[:image] 
+            @category.image.attach(params[:image])
+        end 
         render json: @category, include: ['products', 'products.skus'], status: :accepted
     end
 

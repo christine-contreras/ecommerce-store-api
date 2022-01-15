@@ -25,8 +25,10 @@ class ProductSerializer < ActiveModel::Serializer
     if self.colors.length > 0
       self.colors.collect do |color|
           sku = self.object.skus.find {|sku| sku.color === color}
-          sizes = self.object.skus.collect {|sku| sku.size}.uniq
-          {color: color, image_url: sku.image_url, sizes: sizes, price: sku.price}
+          sizeInfo = self.object.skus.collect do |sku|
+            {size: sku.size, quantity: sku.quantity}
+          end.uniq
+          {color: color, image_url: sku.image_url, sizes: sizeInfo, price: sku.price}
       end.uniq
     else
        []

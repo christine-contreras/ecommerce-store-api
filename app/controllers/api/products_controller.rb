@@ -1,11 +1,15 @@
 class Api::ProductsController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
-    skip_before_action :authorize, only: [:index]
-    before_action :set_product, only: [:update, :destroy]
+    skip_before_action :authorize, only: [:index, :show]
+    before_action :set_product, only: [:update, :destroy, :show]
 
     def index
         products = Product.all
         render json: products, status: :ok
+    end
+
+    def show
+        render json: @product, status: :ok
     end
 
     def create 

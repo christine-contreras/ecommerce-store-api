@@ -1,11 +1,15 @@
 class Api::CategoriesController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
-    skip_before_action :authorize, only: [:index]
-    before_action :set_category, only: [:update, :destroy]
+    skip_before_action :authorize, only: [:index, :show]
+    before_action :set_category, only: [:update, :destroy, :show]
 
     def index
         categories = Category.all
         render json: categories, include: ['products', 'products.skus'], status: :ok
+    end
+
+    def show
+        render json: @category, include: ['products', 'products.skus'], status: :ok
     end
 
     def create 

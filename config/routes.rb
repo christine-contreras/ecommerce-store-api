@@ -12,14 +12,12 @@ Rails.application.routes.draw do
 
     get "/user-cart", to: "carts#show"
 
-    resources :categories, only: [:index, :create, :update, :destroy]
-    resources :products, only: [:index, :create, :update, :destroy]
+    resources :categories
+    resources :products
     resources :skus, only: [:index, :create, :update, :destroy]
 
     post "/update-product-categories", to: "product_categories#update_product_categories"
-    
-    # post '/image_url', to: 'direct_upload#create'
-    # get '/image_url', to: 'direct_upload#create'
+  
   end
 
   # post "rails/active_storage/direct_uploads", to: "direct_uploads#create"

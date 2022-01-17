@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
     get "/user-cart", to: "carts#show"
     resources :carts, only: [:index, :update]
+    patch "/carts/:id/delete-item", to: "carts#delete_item"
+    patch "/carts/:id/update-item-qty/:quantity", to: "carts#update_item"
 
     resources :categories
     resources :products

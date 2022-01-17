@@ -1,6 +1,6 @@
 class Api::CartsController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
-    before_action :set_cart, only: [:update]
+    before_action :set_cart, only: [:update, :delete_item, :update_item ]
     skip_before_action :authorize
 
     def index 
@@ -38,10 +38,26 @@ class Api::CartsController < ApplicationController
         
     end
 
+    def delete_item 
+        item = set_selected_item
+        item.destroy
+        render json: @cart, include: ['selected_items', 'selected_items.sku'], status: :accepted
+    end
+
+    def update_item
+        item = set_selected_item
+        item.update(quantity: params[:quantity])
+        render json: @cart, include: ['selected_items', 'selected_items.sku'], status: :accepted
+    end
+
     private
 
     def set_cart
         @cart = Cart.find_by(id: session[:cart_id])
+    end
+
+    def set_selected_item
+        @cart.selected_items.find_by(id: params[:selected_item_id])
     end
 
     def create_cart

@@ -1,7 +1,12 @@
 class Api::CartsController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
-    # before_action :set_cart
+    before_action :set_cart, only: [:update]
     skip_before_action :authorize
+
+    def index 
+        carts = Cart.all 
+        render json: carts, include: ['selected_items', 'selected_items.sku']
+    end
     
 
     def show 
@@ -11,7 +16,26 @@ class Api::CartsController < ApplicationController
             create_cart
         end
 
-        render json: @cart
+        render json: @cart, include: ['selected_items', 'selected_items.sku']
+    end
+
+    def update
+        sku = Sku.find_by(product_id: params[:product_id], color: params[:color], size: params[:size])
+
+        if sku 
+            cartItem = @cart.selected_items.find_by(sku_id: sku.id)
+            if cartItem #cart item already exists update the quantity
+                 newQuantity = params[:quantity] + cartItem.quantity
+                 cartItem.update(quantity: newQuantity)
+            else  #create cart item
+                 newItem = @cart.selected_items.create(quantity: params[:quantity], sku_id: sku.id)
+            end
+        else
+            render json: { errors: ['Sku Not Found'] }, status: :not_found
+        end
+
+        render json: @cart, include: ['selected_items', 'selected_items.sku'], status: :accepted
+        
     end
 
     private

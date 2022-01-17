@@ -1,5 +1,6 @@
 class Sku < ApplicationRecord
   belongs_to :product
+  has_many :selected_items, dependent: :destroy
   has_one_attached :image
   validates :size, {presence: true }
   validates :color, {presence: true }

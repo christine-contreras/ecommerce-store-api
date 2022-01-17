@@ -11,12 +11,15 @@ Rails.application.routes.draw do
 
 
     get "/user-cart", to: "carts#show"
+    resources :carts, only: [:index, :update]
 
     resources :categories
     resources :products
-    resources :skus, only: [:index, :create, :update, :destroy]
+    resources :skus, only: [:create, :update, :destroy]
 
     post "/update-product-categories", to: "product_categories#update_product_categories"
+
+    resources :selected_items, only: [:index, :update, :destroy]
   
   end
 

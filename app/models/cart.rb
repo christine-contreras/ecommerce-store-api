@@ -1,4 +1,4 @@
 class Cart < ApplicationRecord
-    has_many :skus 
-    has_many :products, through: :skus
+    has_many :selected_items, dependent: :destroy
+    # has_many :products, through: :skus
 end

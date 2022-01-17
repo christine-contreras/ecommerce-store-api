@@ -2,5 +2,5 @@ class OrderSerializer < ActiveModel::Serializer
   attributes :id, :amount, :address, :status, :created_at, :updated_at
 
   # belongs_to :user
-  has_many :skus
+  has_many :selected_items
 end

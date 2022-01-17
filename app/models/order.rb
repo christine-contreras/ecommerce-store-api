@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
     belongs_to :user
-    has_many :skus
+    has_many :selected_items, dependent: :destroy
 
     serialize :address, JSON
     

@@ -6,20 +6,20 @@ class Api::UsersController < ApplicationController
 
         if user.valid?
             session[:user_id] = user.id
-            render json: user, include: ['orders', 'orders.skus'], status: :created
+            render json: user, include: ['orders', 'orders.selected_items', 'orders.selected_items.sku'], status: :created
         else
             render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
     def show
-        render json: @current_user, include: ['orders', 'orders.skus']
+        render json: @current_user, include: ['orders', 'orders.selected_items', 'orders.selected_items.sku']
     end
 
     def update 
         user = @current_user
         user.update(user_params)
-        render json: user, include: ['orders', 'orders.skus'], status: :accepted
+        render json: user, include: ['orders', 'orders.selected_items', 'orders.selected_items.sku'], status: :accepted
     end
 
     def destroy

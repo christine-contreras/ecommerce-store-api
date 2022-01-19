@@ -22,12 +22,16 @@ Rails.application.routes.draw do
     post "/update-product-categories", to: "product_categories#update_product_categories"
 
     resources :selected_items, only: [:index, :update, :destroy]
+
+    resources :orders, only: [:index]
+
+
+    post "/checkout", to: "stripe#checkout"
+    post "/order-success", to: "stripe#order_success"
   
   end
 
-  # post "rails/active_storage/direct_uploads", to: "direct_uploads#create"
-
-  # get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
+  get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 
 
 end

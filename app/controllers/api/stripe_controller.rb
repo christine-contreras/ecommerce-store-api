@@ -103,10 +103,12 @@ class Api::StripeController < ApplicationController
     def create_order 
         session = Stripe::Checkout::Session.retrieve(params[:session_id])
         customer = Stripe::Customer.retrieve(session.customer)
+        byebug
         @current_user.update(stripe_id: customer.id)
         @order = @current_user.orders.create(
             session_id: params[:session_id],
             address: session.shipping.address,
+            name: customer.name,
             email: customer.email,
             amount: session.amount_total / 100,
             status: 'Pending'
@@ -116,7 +118,6 @@ class Api::StripeController < ApplicationController
     end
 
     def update_items 
-        byebug
         params[:items].each do |item|
             selected_item = SelectedItem.find_by(id: item)
             sku_qty = selected_item.sku.quantity - selected_item.quantity

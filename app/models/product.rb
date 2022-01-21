@@ -5,4 +5,20 @@ class Product < ApplicationRecord
     
 
     validates :title, {presence: true}
+
+    def best_seller 
+        if self.categories.find_by(name: 'Best Sellers')
+            return true 
+        else
+            return false
+        end
+    end
+
+    def new_arrival
+        if self.categories.find_by(name: 'New Arrivals')
+            return true 
+        else
+            return false
+        end
+    end
 end

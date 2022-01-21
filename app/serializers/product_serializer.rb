@@ -1,5 +1,5 @@
 class ProductSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :quantity, :isActive, :isSlotted, :options
+  attributes :id, :title, :description, :quantity, :isActive, :isSlotted, :options, :best_seller, :new_arrival
 
   has_many :skus 
   has_many :categories

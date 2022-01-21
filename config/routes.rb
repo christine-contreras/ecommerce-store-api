@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
     resources :selected_items, only: [:index, :update, :destroy]
 
-    resources :orders, only: [:index]
+    resources :orders, only: [:index, :update]
 
 
     post "/checkout", to: "stripe#checkout"

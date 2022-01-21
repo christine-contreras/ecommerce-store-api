@@ -103,7 +103,6 @@ class Api::StripeController < ApplicationController
     def create_order 
         session = Stripe::Checkout::Session.retrieve(params[:session_id])
         customer = Stripe::Customer.retrieve(session.customer)
-        byebug
         @current_user.update(stripe_id: customer.id)
         @order = @current_user.orders.create(
             session_id: params[:session_id],

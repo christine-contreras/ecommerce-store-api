@@ -2,11 +2,6 @@ class Api::SelectedItemsController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     before_action :set_item, only: [:update, :destroy]
     skip_before_action :authorize
-    
-    def index 
-        items = SelectedItem.all 
-        render json: items,  status: :ok
-    end
 
     def update 
         @item.update(item_params)

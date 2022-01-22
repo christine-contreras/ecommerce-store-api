@@ -1,11 +1,6 @@
 class Api::SkusController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     before_action :set_sku, only: [:update, :destroy]
-    
-    # def index 
-    #     skus = Sku.all 
-    #     render json: skus, status: :ok
-    # end
 
     def create 
         sku = Sku.create(sku_params)

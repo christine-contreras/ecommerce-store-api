@@ -2,11 +2,6 @@ class Api::CartsController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     before_action :set_cart, only: [:update, :delete_item, :update_item ]
     skip_before_action :authorize
-
-    def index 
-        carts = Cart.all 
-        render json: carts, include: ['selected_items', 'selected_items.sku']
-    end
     
 
     def show 

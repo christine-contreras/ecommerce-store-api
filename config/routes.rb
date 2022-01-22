@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
 
     get "/user-cart", to: "carts#show"
-    resources :carts, only: [:index, :update]
+    resources :carts, only: [:update]
     patch "/carts/:id/delete-item", to: "carts#delete_item"
     patch "/carts/:id/update-item-qty/:quantity", to: "carts#update_item"
 
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
     post "/update-product-categories", to: "product_categories#update_product_categories"
 
-    resources :selected_items, only: [:index, :update, :destroy]
+    resources :selected_items, only: [:update, :destroy]
 
     resources :orders, only: [:index, :update]
 

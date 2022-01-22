@@ -21,11 +21,7 @@ Rails.application.routes.draw do
 
     post "/update-product-categories", to: "product_categories#update_product_categories"
 
-    resources :selected_items, only: [:update, :destroy]
-
     resources :orders, only: [:index, :update]
-
-
     post "/checkout", to: "stripe#checkout"
     post "/order-success", to: "stripe#order_success"
   

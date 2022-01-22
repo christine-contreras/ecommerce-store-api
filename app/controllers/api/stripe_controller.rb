@@ -1,6 +1,7 @@
 class Api::StripeController < ApplicationController
     before_action :set_stripe_key
-
+    skip_before_action :authorize
+    
     def checkout 
         shipping_amount = params[:shipping].to_i * 100
         orderItems = params[:items].collect do |item|

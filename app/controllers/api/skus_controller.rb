@@ -4,18 +4,11 @@ class Api::SkusController < ApplicationController
 
     def create 
         sku = Sku.create(sku_params)
-        if params[:image] 
-            sku.image.attach(params[:image])
-        end
         render json: sku, status: :created
     end
 
     def update 
         @sku.update(sku_params)
-        if params[:image] 
-            @sku.image.attach(params[:image])
-        end
-        
         render json: @sku, status: :accepted
     end
 
@@ -32,7 +25,7 @@ class Api::SkusController < ApplicationController
     end
 
     def sku_params
-        params.permit(:product_id, :size, :color, :price, :quantity)
+        params.permit(:product_id, :size, :color, :price, :quantity, :image_key)
     end
 
     def render_not_found_response

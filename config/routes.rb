@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     resources :orders, only: [:index, :update]
     post "/checkout", to: "stripe#checkout"
     post "/order-success", to: "stripe#order_success"
+
+    post "/presigned_url", to: "direct_upload#create"
   
   end
 

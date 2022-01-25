@@ -35,7 +35,7 @@ class Api::ProductsController < ApplicationController
     end
 
     def product_params
-        params.permit(:title, :description)
+        params.permit(:title, :description, :isActive)
     end
 
     def render_not_found_response

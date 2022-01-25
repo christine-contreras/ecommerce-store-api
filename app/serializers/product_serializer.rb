@@ -1,5 +1,5 @@
 class ProductSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :quantity, :isActive, :isSlotted, :options, :best_seller, :new_arrival
+  attributes :id, :title, :description, :quantity, :inStock, :isSlotted, :isActive, :options, :best_seller, :new_arrival
 
   has_many :skus 
   has_many :categories
@@ -8,9 +8,9 @@ class ProductSerializer < ActiveModel::Serializer
     self.object.skus.count
   end
 
-  def isActive
+  def inStock
     count = self.quantity
-    count == 0 ? 'inactive' : 'active'
+    count == 0 ? 'out of stock' : 'in stock'
   end
 
   def colors
@@ -23,15 +23,17 @@ class ProductSerializer < ActiveModel::Serializer
 
   def options
     if self.colors.length > 0
+
       self.colors.collect do |color|
           sku = self.object.skus.find {|sku| sku.color === color}
           sizeInfo = self.object.skus.collect do |sku|
-            {size: sku.size, quantity: sku.quantity}
-          end.uniq
+            {size: sku.size, quantity: sku.quantity} if sku.color === color
+          end.compact
+
           {color: color, image_url: sku.image_url, sizes: sizeInfo, price: sku.price}
       end.uniq
     else
-       []
+      []
     end
   end
 

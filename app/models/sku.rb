@@ -15,10 +15,10 @@ class Sku < ApplicationRecord
         url = bucket.object(self.image_key).public_url
         return url
       else
-        return nil 
+        return 'https://freespirit-app-dev.s3.us-east-2.amazonaws.com/product-placeholder.jpg' 
       end
     else
-      return nil
+      return 'https://freespirit-app-dev.s3.us-east-2.amazonaws.com/product-placeholder.jpg'
     end
   end
 

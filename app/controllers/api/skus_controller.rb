@@ -3,7 +3,6 @@ class Api::SkusController < ApplicationController
     before_action :set_sku, only: [:update, :destroy]
 
     def create 
-        byebug
         sku = Sku.create(sku_params)
         render json: sku, status: :created
     end

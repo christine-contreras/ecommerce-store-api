@@ -82,7 +82,6 @@ class Api::StripeController < ApplicationController
 
     def order_success
         order = Order.find_by(session_id: params[:session_id])
-
         if !order  
             create_order 
             update_items    

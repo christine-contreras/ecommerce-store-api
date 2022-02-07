@@ -5,20 +5,16 @@ class Category < ApplicationRecord
     validates :name, {presence: true}
     validates :isActive, {inclusion: { in: [ true, false ] }}
 
-   # grab url of image
+    # grab url of image
     def image_url 
-      bucket = S3_BUCKET
 
       if self.image_key 
-        if bucket.object(self.image_key).exists? 
-          url = bucket.object(self.image_key).public_url
-          return url
-        else
-          return nil 
-        end
+        url = "https://freespirit-app-dev.s3.us-east-2.amazonaws.com/#{self.image_key}"
+        return url
       else
         return nil
       end
+
     end
 
 end

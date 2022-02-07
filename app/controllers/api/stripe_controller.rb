@@ -2,6 +2,7 @@ class Api::StripeController < ApplicationController
     before_action :set_stripe_key
     
     def checkout 
+        # change items to correct stripe format
         shipping_amount = params[:shipping].to_i * 100
         orderItems = params[:items].collect do |item|
             selected_item = SelectedItem.find_by(id: item)
@@ -22,6 +23,7 @@ class Api::StripeController < ApplicationController
 
         end
         
+        # create new stripe session 
         session = Stripe::Checkout::Session.create({
         line_items: orderItems,
         payment_method_types: ['card'],
@@ -73,6 +75,7 @@ class Api::StripeController < ApplicationController
             },
             ],
         mode: 'payment',
+        # append session id to success url so I can fetch the users order on frontend
         success_url:  ENV["WEBSITE_URL"] + 'order-confirmation?session_id={CHECKOUT_SESSION_ID}',
         cancel_url:    ENV["WEBSITE_URL"],
         })
@@ -81,6 +84,7 @@ class Api::StripeController < ApplicationController
     end
 
     def order_success
+        # see if order already exists
         order = Order.find_by(session_id: params[:session_id])
         if !order  
             create_order 
@@ -100,8 +104,10 @@ class Api::StripeController < ApplicationController
     end
 
     def create_order 
+        # fetch order session and user from stripe
         session = Stripe::Checkout::Session.retrieve(params[:session_id])
         customer = Stripe::Customer.retrieve(session.customer)
+        # add stripe id to user. create new order in database
         @current_user.update(stripe_id: customer.id)
         @order = @current_user.orders.create(
             session_id: params[:session_id],
@@ -116,6 +122,7 @@ class Api::StripeController < ApplicationController
     end
 
     def update_items 
+        # update sku quantity, remove cart association and add order association
         params[:items].each do |item|
             selected_item = SelectedItem.find_by(id: item)
             sku_qty = selected_item.sku.quantity - selected_item.quantity

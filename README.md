@@ -1,6 +1,10 @@
 # eCommerce Site API
 
 This API is a eCommerce website API where you can make RESTful CRUD calls to a server to organize categories, products, skus, and orders.
+
+[demo here](https://free-spirit-designs-app.herokuapp.com/)
+
+
 You can use this API in conjunction with my front-end eCommerce app [see the repo](https://github.com/christine-contreras/ecommerce-store-client)
 
 ## Technologies Used in This API
